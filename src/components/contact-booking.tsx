@@ -8,6 +8,8 @@ import { specimens } from "@/data/specimens";
 
 type Purpose = "viewing" | "enquiry";
 
+type FormErrors = { name?: string; email?: string; date?: string; message?: string };
+
 const details = [
   { icon: Mail, label: "Email", value: "enquiries@venomandsilk.com", href: "mailto:enquiries@venomandsilk.com" },
   { icon: Phone, label: "Telephone", value: "+44 20 7946 0102", href: "tel:+442079460102" },
@@ -21,7 +23,7 @@ const fieldClass =
 export function ContactBooking({ specimen, onSpecimenChange }: { specimen: string; onSpecimenChange: (value: string) => void }) {
   const [purpose, setPurpose] = useState<Purpose>("viewing");
   const [values, setValues] = useState({ name: "", email: "", phone: "", date: "", message: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<FormErrors>({});
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
@@ -33,7 +35,7 @@ export function ContactBooking({ specimen, onSpecimenChange }: { specimen: strin
 
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
-    const next: Record<string, string> = {};
+    const next: FormErrors = {};
     if (!values.name.trim()) next.name = "Please tell us your name.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) next.email = "Please enter a valid email address.";
     if (purpose === "viewing" && !values.date) next.date = "Please choose a preferred date.";
