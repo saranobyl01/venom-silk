@@ -181,7 +181,7 @@ export function VenomSilk() {
                 </div>
               </div>
             </Reveal>
-            <div ref={featureRef} className="feature-scroll -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12">
+            <div ref={featureRef} className="feature-scroll edge-fade -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12">
               {specimens.slice(0, 5).map((item, index) => (
                 <article key={item.scientific} className="group relative aspect-[4/5] w-[82vw] max-w-[440px] shrink-0 snap-center overflow-hidden bg-card">
                   <img src={item.image} alt={item.common} width={1200} height={1504} loading="lazy" className="size-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
