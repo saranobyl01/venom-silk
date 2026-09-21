@@ -52,10 +52,10 @@ export function ContactBooking({ specimen, onSpecimenChange }: { specimen: strin
 
   return (
     <section id="enquire" className="section-space bg-surface">
-      <div className="mx-auto grid max-w-[1500px] gap-14 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20 lg:px-12">
+      <div className="mx-auto grid max-w-[1500px] gap-10 px-5 sm:gap-14 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-20 lg:px-12">
         <div className="reveal">
           <p className="eyebrow">Contact & booking</p>
-          <h2 className="mt-5 font-display text-5xl leading-[0.95] sm:text-7xl">
+          <h2 className="mt-5 font-display text-4xl leading-[0.95] sm:text-7xl">
             Arrange a<br />
             <span className="italic text-primary">private viewing.</span>
           </h2>
@@ -63,7 +63,7 @@ export function ContactBooking({ specimen, onSpecimenChange }: { specimen: strin
             The collection is shown quietly, one guest at a time. Tell us what draws you, and we will prepare the
             appropriate enclosures, notes, and time.
           </p>
-          <dl className="mt-12 grid gap-px border-t border-border bg-border">
+          <dl className="mt-8 grid gap-px border-t border-border bg-border sm:mt-12">
             {details.map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-5 bg-surface py-5">
                 <span className="grid size-10 place-items-center border border-border text-primary">
@@ -71,7 +71,7 @@ export function ContactBooking({ specimen, onSpecimenChange }: { specimen: strin
                 </span>
                 <div className="min-w-0">
                   <dt className="eyebrow">{label}</dt>
-                  <dd className="mt-1 truncate text-sm text-foreground/80">
+                  <dd className="mt-1 break-words text-sm text-foreground/80">
                     {href ? <a className="hover:text-primary" href={href}>{value}</a> : value}
                   </dd>
                 </div>
@@ -80,7 +80,7 @@ export function ContactBooking({ specimen, onSpecimenChange }: { specimen: strin
           </dl>
         </div>
 
-        <div className="reveal border border-border bg-card/60 p-6 sm:p-10">
+        <div className="reveal border border-border bg-card/60 p-4 sm:p-10">
           {sent ? (
             <div className="grid min-h-[28rem] place-items-center text-center">
               <div className="animate-fade-in">
@@ -99,14 +99,14 @@ export function ContactBooking({ specimen, onSpecimenChange }: { specimen: strin
             <form noValidate onSubmit={submit} className="grid gap-6">
               <fieldset>
                 <legend className="eyebrow">Purpose of request</legend>
-                <div className="mt-3 grid grid-cols-2 gap-px border border-border bg-border">
+                 <div className="mt-3 grid grid-cols-1 gap-px border border-border bg-border min-[380px]:grid-cols-2">
                   {([["viewing", "Private viewing"], ["enquiry", "Specimen enquiry"]] as const).map(([key, label]) => (
                     <button
                       key={key}
                       type="button"
                       aria-pressed={purpose === key}
                       onClick={() => setPurpose(key)}
-                      className={`px-4 py-4 text-[0.68rem] font-semibold uppercase tracking-[0.16em] transition-colors duration-300 ${purpose === key ? "bg-primary text-primary-foreground" : "bg-card text-muted-foreground hover:text-primary"}`}
+                       className={`min-h-12 px-3 py-3 text-[0.65rem] font-semibold uppercase tracking-[0.14em] transition-colors duration-300 sm:px-4 sm:py-4 sm:text-[0.68rem] sm:tracking-[0.16em] ${purpose === key ? "bg-primary text-primary-foreground" : "bg-card text-muted-foreground hover:text-primary"}`}
                     >
                       {label}
                     </button>
@@ -159,11 +159,11 @@ export function ContactBooking({ specimen, onSpecimenChange }: { specimen: strin
                 {errors.message && <p className="mt-2 text-xs text-destructive">{errors.message}</p>}
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
+               <div className="flex flex-col items-stretch gap-4 border-t border-border pt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
                 <p className="max-w-xs text-[0.68rem] leading-5 text-muted-foreground">
                   Requests are reviewed personally. Viewings are confirmed only after a short welfare conversation.
                 </p>
-                <Button type="submit" size="lg">Send request</Button>
+                 <Button type="submit" size="lg" className="w-full sm:w-auto">Send request</Button>
               </div>
             </form>
           )}
