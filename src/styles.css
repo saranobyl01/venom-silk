@@ -171,11 +171,26 @@
 .feature-scroll { scrollbar-width: thin; scrollbar-color: var(--primary) var(--border); }
 
 @keyframes hero-drift { from { transform: scale(1.02); } to { transform: scale(1.09); } }
-.hero-drift { animation: hero-drift 18s ease-in-out alternate infinite; }
+.hero-drift { animation: hero-drift 24s ease-in-out alternate infinite; }
+
+.reveal { transition-delay: var(--reveal-delay, 0ms); }
+
+@keyframes hero-in { from { opacity: 0; transform: translateY(26px); filter: blur(6px); } to { opacity: 1; transform: none; filter: blur(0); } }
+.hero-in { opacity: 0; animation: hero-in 1100ms cubic-bezier(.2,.8,.2,1) var(--hero-delay, 0ms) forwards; }
+
+.parallax { translate: 0 var(--parallax-y, 0px); will-change: translate; }
+
+.scroll-cue { opacity: var(--cue-opacity, 1); transition: opacity 400ms ease; }
+.scroll-cue::after { content: ""; display: block; width: 1px; height: 3.5rem; margin-inline: auto; background: linear-gradient(var(--primary), transparent); animation: cue-slide 2.6s ease-in-out infinite; transform-origin: top; }
+@keyframes cue-slide { 0%, 100% { transform: scaleY(0.4); opacity: 0.4; } 50% { transform: scaleY(1); opacity: 1; } }
+
+.edge-fade { mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
   .reveal { opacity: 1; transform: none; }
   .image-reveal { clip-path: none; }
+  .hero-in { opacity: 1; animation: none; }
+  .parallax { translate: none; }
 }
