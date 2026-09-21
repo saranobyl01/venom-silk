@@ -132,6 +132,7 @@ export function VenomSilk() {
             </div>
           </div>
           <span aria-hidden="true" className={`absolute right-5 top-1/2 hidden -translate-y-1/2 text-[0.62rem] uppercase tracking-[0.45em] text-foreground/45 transition-opacity duration-700 [writing-mode:vertical-rl] md:block ${scrolled ? "opacity-0" : "opacity-100"}`}>Field notes · Volume 01</span>
+          <span aria-hidden="true" className={`scroll-cue absolute bottom-6 left-1/2 hidden -translate-x-1/2 md:block ${scrolled ? "opacity-0" : "opacity-100"}`} />
         </section>
 
         <section id="collection" className="section-space mx-auto max-w-[1500px] px-5 sm:px-8 lg:px-12">
