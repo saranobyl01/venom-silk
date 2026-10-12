@@ -334,7 +334,7 @@ function SpecimenIndex({ onRequest }: { onRequest: (common: string) => void }) {
       {list.length ? (
         <div key={family + care} className="grid gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
           {list.map((specimen, index) => (
-            <div key={specimen.scientific} className="animate-fade-in" style={{ animationDelay: `${index * 80}ms`, animationFillMode: "both" }}>
+            <div key={specimen.scientific} className="animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ animationDelay: `${index * 80}ms`, animationFillMode: "both" }}>
               <SpecimenCard specimen={specimen} onRequest={onRequest} />
             </div>
           ))}
