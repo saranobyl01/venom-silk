@@ -168,13 +168,7 @@ export function VenomSilk() {
 
           <div className="mt-16 sm:mt-28">
             <Reveal className="flex items-end justify-between border-b border-border pb-5"><div><p className="eyebrow">Selected studies</p><h2 className="mt-3 font-display text-4xl sm:text-6xl">Specimen index</h2></div><span className="hidden text-xs text-muted-foreground sm:block">06 / 2026</span></Reveal>
-            <div className="grid gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
-              {specimens.map((specimen, index) => (
-                <Reveal key={specimen.scientific} delay={(index % 3) * 110}>
-                  <SpecimenCard specimen={specimen} onRequest={requestSpecimen} />
-                </Reveal>
-              ))}
-            </div>
+            <SpecimenIndex onRequest={requestSpecimen} />
           </div>
         </section>
 
@@ -257,6 +251,7 @@ function SpecimenCard({ specimen, onRequest }: { specimen: Specimen; onRequest: 
             <p className="eyebrow mb-2">{specimen.family}</p>
             <h3 className="font-display text-3xl">{specimen.common}</h3>
             <p className="mt-1 text-xs italic text-foreground/60">{specimen.scientific}</p>
+            <div className="mt-3 flex flex-wrap gap-1.5 text-[0.6rem] uppercase tracking-[0.14em] text-foreground/70"><span className="border border-border px-2 py-1">{specimen.care}</span><span className="border border-border px-2 py-1">{specimen.temperament}</span></div>
             <Dialog.Trigger asChild>
               <Button variant="ghost" size="sm" className="mt-5 text-[0.62rem]">View study <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" /></Button>
             </Dialog.Trigger>
@@ -272,7 +267,13 @@ function SpecimenCard({ specimen, onRequest }: { specimen: Specimen; onRequest: 
             <p className="eyebrow">{specimen.family} · {specimen.origin}</p>
              <Dialog.Title className="mt-4 pr-10 font-display text-4xl sm:mt-5 sm:text-5xl">{specimen.common}</Dialog.Title>
             <Dialog.Description className="mt-2 italic text-primary">{specimen.scientific}</Dialog.Description>
-             <p className="mt-5 text-sm leading-6 text-muted-foreground sm:mt-7 sm:leading-7">{specimen.description}</p>
+             <p className="mt-5 text-sm leading-6 text-muted-foreground sm:mt-6 sm:leading-7">{specimen.description}</p>
+             <dl className="mt-6 grid grid-cols-2 gap-px border border-border bg-border text-xs">
+               {([["Care", specimen.care], ["Temperament", specimen.temperament], ["Venom", specimen.venom], ["Habitat", specimen.habitat], ["Temperature", specimen.temperature], ["Humidity", specimen.humidity], ["Adult size", specimen.size], ["Lifespan", specimen.lifespan]] as const).map(([k, v]) => (
+                 <div key={k} className="bg-card p-3"><dt className="eyebrow text-[0.58rem]">{k}</dt><dd className="mt-1 text-foreground">{v}</dd></div>
+               ))}
+             </dl>
+             <div className="mt-6 border-l-2 border-accent pl-4"><p className="eyebrow">Curator note</p><p className="mt-2 text-sm leading-6 text-muted-foreground">{specimen.note}</p></div>
             <Dialog.Close asChild>
               <Button className="mt-8 self-start" onClick={() => onRequest(specimen.common)}>Request a viewing <ArrowRight size={14} /></Button>
             </Dialog.Close>
@@ -308,5 +309,39 @@ function EthicsAccordion() {
         </Accordion.Item>
       ))}
     </Accordion.Root>
+  );
+}
+
+const familyFilters = ["All", "Scorpions", "Tarantulas", "Pythons"] as const;
+const careFilters = ["Any level", "Beginner", "Intermediate", "Specialist"] as const;
+
+function SpecimenIndex({ onRequest }: { onRequest: (common: string) => void }) {
+  const [family, setFamily] = useState<(typeof familyFilters)[number]>("All");
+  const [care, setCare] = useState<(typeof careFilters)[number]>("Any level");
+  const list = specimens.filter((s) => (family === "All" || s.family === family) && (care === "Any level" || s.care === care));
+  const chip = (active: boolean) => `min-h-10 border px-4 text-[0.66rem] font-semibold uppercase tracking-[0.16em] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${active ? "border-primary bg-primary text-primary-foreground" : "border-border text-muted-foreground hover:border-primary hover:text-primary"}`;
+  return (
+    <>
+      <div className="flex flex-col gap-4 py-6 lg:flex-row lg:items-center lg:justify-between">
+        <div role="group" aria-label="Filter by family" className="flex flex-wrap gap-2">
+          {familyFilters.map((f) => <button key={f} type="button" aria-pressed={family === f} className={chip(family === f)} onClick={() => setFamily(f)}>{f}</button>)}
+        </div>
+        <div role="group" aria-label="Filter by care level" className="flex flex-wrap gap-2">
+          {careFilters.map((f) => <button key={f} type="button" aria-pressed={care === f} className={chip(care === f)} onClick={() => setCare(f)}>{f}</button>)}
+        </div>
+      </div>
+      <p className="mb-4 text-xs text-muted-foreground" aria-live="polite">Showing {String(list.length).padStart(2, "0")} of {String(specimens.length).padStart(2, "0")} studies</p>
+      {list.length ? (
+        <div key={family + care} className="grid gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
+          {list.map((specimen, index) => (
+            <div key={specimen.scientific} className="animate-in fade-in slide-in-from-bottom-4 duration-700" style={{ animationDelay: `${index * 80}ms`, animationFillMode: "both" }}>
+              <SpecimenCard specimen={specimen} onRequest={onRequest} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="border border-border p-10 text-center"><p className="font-display text-3xl">No studies match</p><button type="button" className="mt-4 text-xs uppercase tracking-[0.16em] text-primary underline-offset-4 hover:underline" onClick={() => { setFamily("All"); setCare("Any level"); }}>Clear filters</button></div>
+      )}
+    </>
   );
 }
