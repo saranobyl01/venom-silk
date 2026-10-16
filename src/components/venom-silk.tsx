@@ -187,7 +187,7 @@ export function VenomSilk() {
             <div ref={featureRef} className="feature-scroll edge-fade -mx-5 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-5 sm:-mx-8 sm:gap-4 sm:px-8 sm:pb-6 lg:-mx-12 lg:px-12">
               {specimens.slice(0, 5).map((item, index) => (
                 <article key={item.scientific} className="group relative aspect-[4/5] w-[78vw] max-w-[440px] shrink-0 snap-start overflow-hidden bg-card sm:w-[62vw] md:snap-center">
-                  <img src={item.image} alt={item.common} width={1200} height={1504} loading="lazy" className="size-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
+                  <img src={item.image} alt={`${item.common} (${item.scientific}) in a dark, natural setting`} width={1200} height={1504} loading="lazy" className="size-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105" />
                   <div className="card-overlay absolute inset-0 transition-opacity duration-700 group-hover:opacity-90" />
                   <span className="absolute left-5 top-5 font-display text-sm text-primary">0{index + 1}</span>
                   <div className="absolute inset-x-0 bottom-0 p-5 transition-transform duration-700 group-hover:-translate-y-1 sm:p-6">
@@ -245,7 +245,7 @@ function SpecimenCard({ specimen, onRequest }: { specimen: Specimen; onRequest: 
     <Dialog.Root>
       <article className="group relative bg-background p-3 sm:p-4">
         <div className="relative aspect-[4/5] overflow-hidden">
-          <img src={specimen.image} alt={specimen.common} width={1200} height={1504} loading="lazy" className="size-full object-cover transition duration-[1100ms] ease-out group-hover:scale-[1.04] group-hover:brightness-110" />
+          <img src={specimen.image} alt={`${specimen.common} (${specimen.scientific}) in a dark, natural setting`} width={1200} height={1504} loading="lazy" className="size-full object-cover transition duration-[1100ms] ease-out group-hover:scale-[1.04] group-hover:brightness-110" />
           <div className="card-overlay absolute inset-0" />
            <div className="absolute inset-x-0 bottom-0 p-4 transition-transform duration-700 group-hover:-translate-y-1 sm:p-5">
             <p className="eyebrow mb-2">{specimen.family}</p>
@@ -261,7 +261,7 @@ function SpecimenCard({ specimen, onRequest }: { specimen: Specimen; onRequest: 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-[70] bg-background/85 backdrop-blur-md data-[state=open]:animate-fade-in" />
          <Dialog.Content className="fixed left-1/2 top-1/2 z-[80] grid max-h-[calc(100svh-1rem)] w-[calc(100vw-1rem)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overscroll-contain border border-border bg-card shadow-2xl data-[state=open]:animate-scale-in sm:max-h-[88vh] sm:w-[min(92vw,900px)] md:grid-cols-2">
-           <div className="h-48 sm:min-h-72 sm:h-auto"><img src={specimen.image} alt={specimen.common} width={1200} height={1504} className="size-full object-cover" /></div>
+           <div className="h-48 sm:min-h-72 sm:h-auto"><img src={specimen.image} alt={`${specimen.common} (${specimen.scientific})`} width={1200} height={1504} className="size-full object-cover" /></div>
            <div className="relative flex flex-col justify-center p-5 pt-7 sm:p-10">
             <Dialog.Close asChild><Button variant="icon" size="icon" className="absolute right-4 top-4" aria-label="Close details"><X size={17} /></Button></Dialog.Close>
             <p className="eyebrow">{specimen.family} · {specimen.origin}</p>
